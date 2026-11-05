@@ -1,0 +1,8 @@
+Package: com.moi.montweak
+Name: MonTweak
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Mon premier tweak
+Maintainer: moi
+Author: moi
+Section: Tweaks
