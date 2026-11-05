@@ -1,0 +1,15 @@
+```json title=".github/workflows/main.yml"
+{
+"name": "Build IPA",
+"on": {"workflow_dispatch": {"inputs": {"ipa_url": {"description": "Lien direct vers l'IPA dechiffre", "required": true}}}},
+"jobs": {"build": {"runs-on": "macos-latest", "steps": [
+{"uses": "actions/checkout@v4"},
+{"name": "Dependances", "run": "brew install ldid dpkg make xz"},
+{"name": "Installer Theos", "run": "echo \"THEOS=$HOME/theos\" >> $GITHUB_ENV && export THEOS=$HOME/theos && bash -c \"$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)\""},
+{"name": "Compiler le dylib", "run": "gmake package FINALPACKAGE=1"},
+{"name": "Installer cyan", "run": "python3 -m venv $RUNNER_TEMP/venv && $RUNNER_TEMP/venv/bin/pip install https://github.com/asdfzxcvbn/pyzule-rw/archive/refs/tags/v1.4.4.zip && echo \"$RUNNER_TEMP/venv/bin\" >> $GITHUB_PATH"},
+{"name": "Telecharger l'IPA", "run": "curl -L -o app.ipa \"${{ inputs.ipa_url }}\""},
+{"name": "Injecter le tweak", "run": "cyan -i app.ipa -o App_patched.ipa -uwf packages/*.deb"},
+{"uses": "actions/upload-artifact@v4", "with": {"name": "ipa-patchee", "path": "App_patched.ipa"}}
+]}}}
+```
