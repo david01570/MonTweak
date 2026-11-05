@@ -1,4 +1,3 @@
-```objc title="Tweak.x"
 #import <UIKit/UIKit.h>
 
 %ctor {
@@ -20,4 +19,3 @@
         [w.rootViewController presentViewController:a animated:YES completion:nil];
     });
 }
-```
