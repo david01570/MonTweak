@@ -1,0 +1,1 @@
+Compatibilite des apps sideloadees.
